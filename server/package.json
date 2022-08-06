@@ -1,0 +1,23 @@
+{
+  "name": "sofit-viewer-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlasnikita/sofit-viewer.git"
+  },
+  "author": "vlasnikita",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vlasnikita/sofit-viewer/issues"
+  },
+  "homepage": "https://github.com/vlasnikita/sofit-viewer#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "file-browser": "0.0.5"
+  }
+}
