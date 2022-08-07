@@ -1,30 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useReducer, useEffect } from 'react';
 
 import { getTraces } from '../api/index.js'
 import './App.css';
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "SET_TRACES": {
+      const traces = action.payload.map(key => ({ key }))
+      return {
+        ...state,
+        traces
+      }
+    }
+  
+    default:
+      return state;
+  }
+}
+
 function App() {
-  const [data, setData] = useState({ hits: [] });
+  const [store, dispatch] = useReducer(reducer, {traces: []});
 
   useEffect(() => {
-    const result = getTraces()
-
-    console.log(result.data);
+    getTraces().then(traces => dispatch({ type: "SET_TRACES", payload: traces }));
   }, []);
+
+  const getKeys = () => store.traces.length > 0 && store.traces.map(trace => (
+    <p className='link' key={trace.key}>
+      {trace.key}&nbsp;
+      (<a href={`http://localhost:3001/traces/${trace.key}/json`} target="_blank">json</a>
+      &nbsp;|&nbsp;
+      <a href={`http://localhost:3001/traces/${trace.key}/image`} target="_blank">jpg</a>)
+    </p>
+  ))
 
   return (
     <div className="App">
-      <header className="App-header">
-        <p>Edit <code>src/App.js</code> and save to reload.</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {getKeys()}
     </div>
   );
 }
