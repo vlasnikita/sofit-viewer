@@ -13,7 +13,7 @@ const initialState = {
   offset: 0, 
   isOffsetting: false, 
   isDataCompletelyLoaded: false,
-  activeTrace: "A011CA126_68f8f9e7-04ac-4395-998b-a50f99901a78"
+  activeTrace: null
 }
 
 function reducer(state, action) {
@@ -41,6 +41,11 @@ function reducer(state, action) {
     case "SET_ACTIVE_TRACE": return {
       ...state,
       activeTrace: action.payload
+    }
+
+    case "RESET_ACTIVE_TRACE": return {
+      ...state,
+      activeTrace: null
     }
 
     default: return state;
@@ -85,7 +90,10 @@ function App() {
   return (
     <div className="App">
       <Gallery traces={store.traces} handleSetActiveTrace={handleSetActiveTrace} />
-      <Viewer trace={traceByKeySelector(store.activeTrace)} handleResetActiveTrace={() => dispatch({ type: "RESET_ACTIVE_TRACE"})} />
+      {store.activeTrace 
+        ? <Viewer trace={traceByKeySelector(store.activeTrace)} handleResetActiveTrace={() => dispatch({ type: "RESET_ACTIVE_TRACE"})} />
+        : <div class="App__cover">Выберите проезд ТС</div>
+      }
     </div>
   );
 }

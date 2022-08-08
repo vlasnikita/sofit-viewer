@@ -4,21 +4,16 @@ import './style.scss';
 
 function Viewer({ trace, handleResetActiveTrace }) {
 
-  const [plateCenterVisible, setPlateCenterVisible] = useState(true)
-  const [plateRegionVisible, setPlateRegionVisible] = useState(true)
-  const [vehicleVisible, setVehicleVisible] = useState(true)
+  const [plateCenterVisible, setPlateCenterVisible] = useState(false)
+  const [plateRegionVisible, setPlateRegionVisible] = useState(false)
+  const [vehicleVisible, setVehicleVisible] = useState(false)
 
-  const [coordinates, setCoordinates] = useState(0)
   const refCanvas = useRef(null);
 
   useEffect(() => {                             
     const context = refCanvas.current.getContext('2d'); 
     if(trace) drawCanvas(context)
   });
-
-  // useEffect(() => {
-  //   imageRendered && drawTraces()
-  // }, [imageRendered])
 
   const drawTraces = () => {
     const ctx = refCanvas.current.getContext('2d');
@@ -73,36 +68,9 @@ function Viewer({ trace, handleResetActiveTrace }) {
       refCanvas.current.height = traceImage.naturalHeight
       ctx.drawImage(traceImage, 0, 0);
       
-      setImageRendered(true)
       drawTraces()
     }
     traceImage.src = `http://localhost:3001/traces/${trace.history.plate}_${trace.uuid}/image`;
-  }
-
-  const getBody = () => {
-    console.log(trace?.history?.tracks[0]?.points.map(el => el.plate))
-
-    return (
-      <>
-      <div className="Viewer__photoContainer">
-        {/* <img 
-          className="Viewer__photo" src={`http://localhost:3001/traces/${trace.history.plate}_${trace.uuid}/image`} 
-          onClick={event => {
-            var x = event.pageX - event.target.offsetLeft;
-            var y = event.pageY - event.target.offsetTop;
-            setCoordinates("X Coordinate: " + x + " Y Coordinate: " + y);
-          }}
-        /> */}
-        {/* <canvas 
-          className="Viewer__photo"
-          ref={refCanvas}
-        ></canvas> */}
-      </div>
-      <div className="Viewer__settings">
-          {coordinates}
-      </div>
-      </>
-    )
   }
 
   return (
@@ -115,7 +83,22 @@ function Viewer({ trace, handleResetActiveTrace }) {
       </div>
 
       <div className="Viewer__settings">
-        {coordinates}
+        <div className="Viewer__checkboxContainer">
+          <input className="Viewer__checkbox Viewer__checkbox_red" checked={plateCenterVisible} onChange={() => setPlateCenterVisible(!plateCenterVisible)} type="checkbox" id="plateCenter" />
+          <label htmlFor="plateCenter">ГРЗ — центр</label>
+        </div>
+
+        <div className="Viewer__checkboxContainer">
+          <input className="Viewer__checkbox Viewer__checkbox_green" checked={plateRegionVisible} onChange={() => setPlateRegionVisible(!plateRegionVisible)} type="checkbox" id="plateRegion" />
+          <label htmlFor="plateRegion">ГРЗ — рамка</label>
+        </div>
+
+        <div className="Viewer__checkboxContainer">
+          <input className="Viewer__checkbox Viewer__checkbox_blue" checked={vehicleVisible} onChange={() => setVehicleVisible(!vehicleVisible)} type="checkbox" id="vehicle" />
+          <label htmlFor="vehicle">Границы ТС</label>
+        </div>
+
+        <button className="Viewer__reset" onClick={handleResetActiveTrace}>Закрыть 🞪</button>
       </div>
     </div>
   );
