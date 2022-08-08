@@ -13,7 +13,7 @@ const initialState = {
   offset: 0, 
   isOffsetting: false, 
   isDataCompletelyLoaded: false,
-  activeTrace: null
+  activeTrace: "A011CA126_68f8f9e7-04ac-4395-998b-a50f99901a78"
 }
 
 function reducer(state, action) {
