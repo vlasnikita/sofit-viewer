@@ -16,8 +16,9 @@ function getTracefilePath(traceId, fileType) {
     return path.join(__dirname, storage, traceId, fileName);
 }
 
-function purifyTraceJson(jsonRaw) {
-    return jsonRaw.history.tracks[0].points;
+function purifyTraceJson({ timestamp, history, uuid }) {
+    const json = { timestamp, history, uuid }
+    return json;
 }
 
 module.exports = {
