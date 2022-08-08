@@ -1,0 +1,69 @@
+.Gallery{
+  padding: 10px;
+  height: 100%;
+  width: 300px;
+  max-width: 300px;
+  box-sizing: border-box;
+  border-right: 2px solid black;
+
+  &__item {
+    cursor: pointer;
+    margin-bottom: 4px;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+      &Thumbnail{
+        width: auto;
+        height: 100%;
+        margin-right: 8px;
+      }
+
+      &Info{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 100%;
+      }
+  }
+
+  &__plate {
+    margin-top: 3px;
+    padding: 2px 4px;
+    border: 1px solid black;
+    border-radius: 2px;
+    font-weight: bold;
+    font-family: Gill Sans Extrabold, sans-serif;
+    font-size: 14px;
+    height: 18px;
+    background-color: #fffcf2;
+
+    &Letter{
+      font-size: 12px;
+    }
+
+    &Number{
+      font-size: 14px;
+    }
+
+    &Region{
+      font-size: 12px;
+      padding-left: 4px;
+      position: relative;
+
+      &::before{
+        content: "";
+        position: absolute;
+        top: -6px;
+        left: 2px;
+        width: 1px;
+        height: 24px;
+        background-color: black;
+      }
+    }
+  }
+}
